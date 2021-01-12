@@ -1,11 +1,6 @@
-import React from 'react';
+import React from "react";
+import Home from "./pages/Home";
 
-const App = () => {
-  return (
-    <div>
-      Hello!! This is React Session from Scratch
-    </div>
-  );
-};
+const App = () => <Home />;
 
 export default App;
