@@ -1,0 +1,23 @@
+.container {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.quote-list {
+    margin-right: 50px;
+}
+
+.quote-body {
+    background-color: #F2F5FE;
+    border: 1px solid #F2F5FE;
+    width: 350px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
