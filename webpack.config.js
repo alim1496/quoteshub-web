@@ -23,6 +23,17 @@ module.exports = {
           { loader: "sass-loader" },
         ],
       },
+      {
+        test: /\.(png|jpg|ttf|eot|woff|woff2)(\?.*)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]",
+            },
+          },
+        ],
+      },
     ],
   },
   optimization: {
