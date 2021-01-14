@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Footer from "../components/Footer";
 import QuoteList from "../components/QuoteList";
 import TopicsBar from "../components/TopicsBar";
 import "../style/home.scss";
@@ -36,6 +37,7 @@ const Home = () => {
           <QuoteList quotes={partition} key={index} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

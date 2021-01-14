@@ -6,12 +6,12 @@ const TopicsBar = ({ topics }) => {
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
   return (
-    <ul className="topics-bar">
+    <div className="topics-bar">
       {topicList &&
         topicList.map(({ id, name }, index) => (
-          <li key={index}>{name.split(" ")[0]}</li>
+          <span key={index}>{name.split(" ")[0]}</span>
         ))}
-    </ul>
+    </div>
   );
 };
 

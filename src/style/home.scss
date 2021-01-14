@@ -1,25 +1,21 @@
 @font-face {
-    font-family: "LGC Bold";
-    src: url("../assets/fonts/LGCBold.ttf");
+    font-family: "Merriweather";
+    src: url("../assets/fonts/Merriweather-Regular.ttf");
 }
 
 @font-face {
-    font-family: "LGC";
-    src: url("../assets/fonts/LGC.ttf");
+    font-family: "OpenSans";
+    src: url("../assets/fonts/OpenSans-Regular.ttf");
 }
 
 @font-face {
-    font-family: "LGC Light";
-    src: url("../assets/fonts/LGCLight.ttf");
-}
-
-@font-face {
-    font-family: "cool";
-    src: url("../assets/fonts/coolvetica.ttf");
+    font-family: "Merriweather Bold";
+    src: url("../assets/fonts/Merriweather-Bold.ttf");
 }
 
 .container {
     width: 80%;
+    max-width: 1200px;
     margin: 20px auto;
 }
 
@@ -27,22 +23,34 @@
     display: flex;
     justify-content: space-around;
     margin: 20px auto;
+    max-width: 1200px;
     width: 80%;
 }
 
 .quote-body {
     background-color: #F2F5FE;
     border: 1px solid #F2F5FE;
-    width: 200px;
+    width: 250px;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+    font-weight: 400;
+    .single-quote {
+        font-family: "Merriweather", Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        line-height: 24px;
+        font-weight: 900;
+    }
     p {
-        font-family: "LGC", Arial, Helvetica, sans-serif;
-        font-size: 18px;
-        margin: 0;
+        font-family: "Merriweather", Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        margin: 0 0 10px 0;
+        color: #101439;
     }
     a {
-        font-family: "LGC Bold", Arial, Helvetica, sans-serif;
+        font-family: "OpenSans", Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        text-decoration: none;
+        color: #101439;
     }
 }

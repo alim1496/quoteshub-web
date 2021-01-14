@@ -1,9 +1,23 @@
 .topics-bar {
-    font-family: "cool", Arial, Helvetica, sans-serif;
-    list-style-type: none;
+    font-family: "Merriweather Bold", Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 80%;
     margin: auto;
+}
+
+.main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    width: 60%;
+    span, a {
+        font-family: "Merriweather", Arial, Helvetica, sans-serif;
+        color: #101439;
+        margin-right: 20px;
+        text-decoration: none;
+        font-size: 14px;
+    }
 }
