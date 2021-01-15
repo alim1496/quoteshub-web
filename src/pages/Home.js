@@ -4,6 +4,8 @@ import QuoteList from "../components/QuoteList";
 import TopicsBar from "../components/TopicsBar";
 import "../style/home.scss";
 
+const fetchHomeData = () => {};
+
 const Home = () => {
   const partitions = [];
   const [topics, setTopics] = useState([]);
@@ -17,6 +19,8 @@ const Home = () => {
       .then(({ categories, quotes }) => {
         setTopics(categories);
         setQuotes(quotes);
+      }, (error) => {
+        console.log(error);
       });
   }, []);
 

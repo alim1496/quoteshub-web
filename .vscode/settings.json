@@ -1,10 +1,10 @@
 {
-  "emmet.excludeLanguages": ["markdown"],
+  "emmet.excludeLanguages": [
+  
+  "markdown"],
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },
-  "editor.formatOnSave": false,
-  "[javascript]": {
-    "editor.formatOnSave": true
-  }
+  "editor.formatOnSave": true,
+
 }
