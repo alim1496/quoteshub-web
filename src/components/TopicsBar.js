@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../style/topics-bar.scss";
 
-const TopicsBar = ({ topics }) => {
+const TopicsBar = () => {
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?with_topics=true&size=0"
+    )
+      .then((res) => res.json())
+      .then(
+        ({ categories }) => {
+          setTopics(categories);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, []);
+
   let topicList = [];
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];

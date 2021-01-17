@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
-import Footer from "../components/Footer";
+
 import QuoteList from "../components/QuoteList";
-import TopicsBar from "../components/TopicsBar";
 import "../style/home.scss";
 
 const Home = ({ location, match }) => {
   const partitions = [];
-  const [topics, setTopics] = useState([]);
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const { pathname } = location;
@@ -44,12 +42,11 @@ const Home = ({ location, match }) => {
 
   const fetchHome = () => {
     fetch(
-      "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&with_topics=true&page=1&size=30"
+      "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=1&size=30"
     )
       .then((res) => res.json())
       .then(
-        ({ categories, quotes }) => {
-          setTopics(categories);
+        ({ quotes }) => {
           setQuotes(quotes);
           setLoading(false);
         },
@@ -69,9 +66,8 @@ const Home = ({ location, match }) => {
   }
 
   return (
-    <div className="container">
-      <TopicsBar topics={topics} />
-      {loading && <div className="main-loader">Loading...</div>}
+    <>
+      {loading && <div className="loader-container"><div className="main-loader">Loading...</div></div>}
       {!loading && (
         <Fragment>
           <div className="main-container">
@@ -79,10 +75,10 @@ const Home = ({ location, match }) => {
               <QuoteList quotes={partition} key={index} />
             ))}
           </div>
-          <Footer />
+          
         </Fragment>
       )}
-    </div>
+    </>
   );
 };
 
