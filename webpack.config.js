@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "/dist"),
     filename: "js/[name].[hash].bundle.js",
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -53,6 +54,7 @@ module.exports = {
     hot: true,
     open: true,
     index: "index.html",
+    historyApiFallback: true,
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
 };

@@ -3,12 +3,12 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 
 const App = () => (
-	<BrowserRouter>
-		<Switch>
-			<Route exact path="/" component={Home} />
-			<Route exact path="/category/:id/:name" component={Home} />
-		</Switch>
-	</BrowserRouter>
-)
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/category/:id/:name" exact component={Home} />
+    </Switch>
+  </BrowserRouter>
+);
 
 export default App;

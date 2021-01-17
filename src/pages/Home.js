@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import Footer from "../components/Footer";
 import QuoteList from "../components/QuoteList";
 import TopicsBar from "../components/TopicsBar";
@@ -8,13 +8,16 @@ const Home = ({ location, match }) => {
   const partitions = [];
   const [topics, setTopics] = useState([]);
   const [quotes, setQuotes] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { pathname } = location;
 
   useEffect(() => {
     checkPath(pathname);
   }, [pathname]);
 
-  const checkPath = (path) => {
+  const checkPath = async (path) => {
+    await setQuotes([]);
+    setLoading(true);
     if (path.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
@@ -28,11 +31,15 @@ const Home = ({ location, match }) => {
       `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}?page=1&size=30`
     )
       .then((res) => res.json())
-      .then((result) => {
-        setQuotes(result);
-      }, (error) => {
-        console.log(error);
-      });
+      .then(
+        (result) => {
+          setQuotes(result);
+          setLoading(false);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   const fetchHome = () => {
@@ -40,12 +47,16 @@ const Home = ({ location, match }) => {
       "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&with_topics=true&page=1&size=30"
     )
       .then((res) => res.json())
-      .then(({ categories, quotes }) => {
-        setTopics(categories);
-        setQuotes(quotes);
-      }, (error) => {
-        console.log(error);
-      });
+      .then(
+        ({ categories, quotes }) => {
+          setTopics(categories);
+          setQuotes(quotes);
+          setLoading(false);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   if (quotes.length > 0) {
@@ -60,12 +71,17 @@ const Home = ({ location, match }) => {
   return (
     <div className="container">
       <TopicsBar topics={topics} />
-      <div className="main-container">
-        {partitions.map((partition, index) => (
-          <QuoteList quotes={partition} key={index} />
-        ))}
-      </div>
-      <Footer />
+      {loading && <div className="main-loader">Loading...</div>}
+      {!loading && (
+        <Fragment>
+          <div className="main-container">
+            {partitions.map((partition, index) => (
+              <QuoteList quotes={partition} key={index} />
+            ))}
+          </div>
+          <Footer />
+        </Fragment>
+      )}
     </div>
   );
 };
