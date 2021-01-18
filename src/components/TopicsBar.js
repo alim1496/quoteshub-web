@@ -4,6 +4,7 @@ import "../style/topics-bar.scss";
 
 const TopicsBar = () => {
   const [topics, setTopics] = useState([]);
+  const [selected, setSelected] = useState(-1);
 
   useEffect(() => {
     fetch(
@@ -24,20 +25,26 @@ const TopicsBar = () => {
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
   return (
-    <div className="topics-bar">
-      {topicList &&
-        topicList.map(({ id, name }, index) => (
-          <Link
-            key={index}
-            to={
-              id !== -1
-                ? `/category/${id}/${name.split(" ")[0].toLowerCase()}`
-                : ""
-            }
-          >
-            <span>{name.split(" ")[0]}</span>
-          </Link>
-        ))}
+    <div className="main-navbar">
+      <hr />
+      <div className="topics-bar">
+        {topicList &&
+          topicList.map(({ id, name }, index) => (
+            <Link
+              key={index}
+              to={
+                id !== -1
+                  ? `/category/${id}/${name.split(" ")[0].toLowerCase()}`
+                  : ""
+              }
+              className={id === selected ? "selected" : ""}
+              onClick={() => setSelected(id)}
+            >
+              <span>{name.split(" ")[0]}</span>
+            </Link>
+          ))}
+      </div>
+      <hr />
     </div>
   );
 };
