@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
+import ErrorState from "../components/ErrorState";
 
 const Home = ({ location, match }) => {
   const partitions = [];
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { pathname } = location;
 
   useEffect(() => {
@@ -36,6 +38,8 @@ const Home = ({ location, match }) => {
         },
         (error) => {
           console.log(error);
+          setLoading(false);
+          setError(true);
         }
       );
   };
@@ -52,6 +56,8 @@ const Home = ({ location, match }) => {
         },
         (error) => {
           console.log(error);
+          setLoading(false);
+          setError(true);
         }
       );
   };
@@ -65,20 +71,31 @@ const Home = ({ location, match }) => {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="main-loader">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorState
+        msg="something went wrong"
+        tryAgain={true}
+        tryMsg="try again"
+        onTryClick={() => checkPath(pathname)}
+      />
+    );
+  }
+
   return (
-    <>
-      {loading && <div className="loader-container"><div className="main-loader">Loading...</div></div>}
-      {!loading && (
-        <Fragment>
-          <div className="main-container">
-            {partitions.map((partition, index) => (
-              <QuoteList quotes={partition} key={index} />
-            ))}
-          </div>
-          
-        </Fragment>
-      )}
-    </>
+    <div className="main-container">
+      {partitions.map((partition, index) => (
+        <QuoteList quotes={partition} key={index} />
+      ))}
+    </div>
   );
 };
 

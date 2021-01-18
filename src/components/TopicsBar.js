@@ -27,7 +27,16 @@ const TopicsBar = () => {
     <div className="topics-bar">
       {topicList &&
         topicList.map(({ id, name }, index) => (
-          <Link to={id !== -1 ? `/category/${id}/${name.split(" ")[0].toLowerCase()}` : ''}><span key={index}>{name.split(" ")[0]}</span></Link>
+          <Link
+            key={index}
+            to={
+              id !== -1
+                ? `/category/${id}/${name.split(" ")[0].toLowerCase()}`
+                : ""
+            }
+          >
+            <span>{name.split(" ")[0]}</span>
+          </Link>
         ))}
     </div>
   );
