@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
+import React, { useState, useEffect, useRef, Fragment, useContext } from "react";
 
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
 import ErrorState from "../components/ErrorState";
+import { TopicContext, useTopic } from "../context/TabContextController";
 
 const Home = ({ location, match }) => {
   const partitions = [];
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const topic = useTopic();
   const { pathname } = location;
 
   useEffect(() => {
@@ -21,8 +23,10 @@ const Home = ({ location, match }) => {
     if (path.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
+      topic.updateTab(id);
     } else {
       fetchHome();
+      topic.updateTab(-1);
     }
   };
 

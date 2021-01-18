@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { TopicContext, useTopic } from "../context/TabContextController";
 import "../style/topics-bar.scss";
 
 const TopicsBar = () => {
   const [topics, setTopics] = useState([]);
-  const [selected, setSelected] = useState(-1);
+  const topic = useTopic();
 
   useEffect(() => {
     fetch(
@@ -37,8 +38,8 @@ const TopicsBar = () => {
                   ? `/category/${id}/${name.split(" ")[0].toLowerCase()}`
                   : ""
               }
-              className={id === selected ? "selected" : ""}
-              onClick={() => setSelected(id)}
+              className={id === topic.tab ? "selected" : ""}
+              onClick={() => topic.updateTab(id)}
             >
               <span>{name.split(" ")[0]}</span>
             </Link>
