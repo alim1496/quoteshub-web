@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import TabContext from "./context/TabContext";
 import { TopicContextProvider } from "./context/TabContextController";
+import Author from "./pages/Author";
 
 const App = () => {
   return (
@@ -15,12 +16,13 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/category/:id/:name" exact component={Home} />
+            <Route path="/author/:id/:name" exact component={Author} />
           </Switch>
           <Footer />
         </BrowserRouter>
       </div>
     </TopicContextProvider>
   );
-}
+};
 
 export default App;

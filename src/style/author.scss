@@ -1,0 +1,32 @@
+.author-container {
+  width: 80%;
+  margin: auto;
+}
+
+.author-details {
+  display: flex;
+  img {
+    width: 25%;
+    margin-right: 20px;
+  }
+}
+
+.author-desc {
+  width: 60%;
+  span {
+    font-family: "Merriweather Bold", Arial, Helvetica, sans-serif;
+    font-size: 24px;
+  }
+  p {
+    font-family: "Merriweather", Arial, Helvetica, sans-serif;
+    margin: 5px 0 0 0;
+    font-size: 14px;
+  }
+}
+
+.slick-slide {
+  background-color: #f2f5fe;
+  border: 1px solid #f2f5fe;
+  margin-right: 20px;
+  padding: 20px;
+}
