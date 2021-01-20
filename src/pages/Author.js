@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import { settings } from "../utils/SliderSettings";
 import "../style/author.scss";
+import Quote from "../components/Quote";
 
 const Author = ({ match }) => {
   const [loading, setLoading] = useState(false);
@@ -60,10 +59,15 @@ const Author = ({ match }) => {
           <p>{source.shortDesc}</p>
         </div>
       </div>
-
-      <Slider {...settings}>
-        {quotes && quotes.map(({ id, title }) => <div key={id}>{title}</div>)}
-      </Slider>
+      <div className="carousel-holder">
+        <div className="title">{name} Quotes</div>
+        <div className="author-quote-list">
+          {quotes &&
+            quotes.map((quote) => (
+              <Quote quote={quote} key={quote.id} rightMargin={20} />
+            ))}
+        </div>
+      </div>
     </div>
   );
 };

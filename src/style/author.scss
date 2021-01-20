@@ -1,6 +1,6 @@
 .author-container {
   width: 80%;
-  margin: auto;
+  margin: 20px auto;
 }
 
 .author-details {
@@ -24,9 +24,23 @@
   }
 }
 
-.slick-slide {
+.author-quote-list {
+  display: flex;
+  flex-flow: wrap row;
+}
+
+.carousal-item {
   background-color: #f2f5fe;
   border: 1px solid #f2f5fe;
   margin-right: 20px;
   padding: 20px;
+}
+
+.carousel-holder {
+  margin: 30px 0;
+  .title {
+    font-family: "Merriweather Bold", Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
 }
