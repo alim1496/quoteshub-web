@@ -1,3 +1,7 @@
+$color-background: #ffffff;
+$color-loader: #101439;
+$common-bg: #10182f;
+
 @font-face {
   font-family: "Merriweather";
   src: url("../assets/fonts/Merriweather-Regular.ttf");
@@ -13,19 +17,19 @@
   src: url("../assets/fonts/Merriweather-Bold.ttf");
 }
 
-$color-background: #ffffff;
-$color-loader: #101439;
-
 .container {
   margin: 20px auto;
   max-width: 1400px;
 }
 
 .main-container {
-  display: flex;
-  justify-content: space-around;
   margin: 20px auto;
   width: 80%;
+}
+
+.container-quotes {
+  display: flex;
+  justify-content: space-between;
 }
 
 .loader-container {

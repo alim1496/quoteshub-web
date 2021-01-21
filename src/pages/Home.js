@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, Fragment, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  Fragment,
+  useContext,
+} from "react";
 
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
@@ -12,6 +18,7 @@ const Home = ({ location, match }) => {
   const [error, setError] = useState(false);
   const topic = useTopic();
   const { pathname } = location;
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     checkPath(pathname);
@@ -24,15 +31,39 @@ const Home = ({ location, match }) => {
       const { id, name } = match.params;
       fetchCategory(id);
       topic.updateTab(id);
+      setTitle(`${name[0].toUpperCase() + name.substring(1)} Quotes`);
+    } else if (path.includes("quotes")) {
+      const { id, name } = match.params;
+      fetchAuthorQuotes(id);
+      setTitle(`${name} Quotes`);
     } else {
       fetchHome();
       topic.updateTab(-1);
+      setTitle("Featured Quotes");
     }
+  };
+
+  const fetchAuthorQuotes = (id) => {
+    fetch(
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=1&size=30`
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setQuotes(result);
+          setLoading(false);
+        },
+        (error) => {
+          console.log(error);
+          setLoading(false);
+          setError(true);
+        }
+      );
   };
 
   const fetchCategory = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}?page=1&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=1&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -96,9 +127,12 @@ const Home = ({ location, match }) => {
 
   return (
     <div className="main-container">
-      {partitions.map((partition, index) => (
-        <QuoteList quotes={partition} key={index} />
-      ))}
+      <h2 className="top-title">{title}</h2>
+      <div className="container-quotes">
+        {partitions.map((partition, index) => (
+          <QuoteList quotes={partition} key={index} />
+        ))}
+      </div>
     </div>
   );
 };

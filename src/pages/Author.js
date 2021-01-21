@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../style/author.scss";
 import Quote from "../components/Quote";
 
@@ -68,6 +69,9 @@ const Author = ({ match }) => {
             ))}
         </div>
       </div>
+      <Link to={`/quotes/${id}/${name}`} className="see-more">
+        see more
+      </Link>
     </div>
   );
 };

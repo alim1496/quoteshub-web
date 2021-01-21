@@ -1,3 +1,7 @@
+$color-background: #ffffff;
+$color-loader: #101439;
+$common-bg: #10182f;
+
 .author-container {
   width: 80%;
   margin: 20px auto;
@@ -43,4 +47,21 @@
     font-size: 20px;
     margin-bottom: 10px;
   }
+}
+
+.see-more {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-family: "Merriweather", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #101439;
+  background-color: #101439;
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 50px;
+  margin-bottom: 30px;
 }
