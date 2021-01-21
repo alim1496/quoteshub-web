@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { TopicContext, useTopic } from "../context/TabContextController";
 import "../style/topics-bar.scss";
 
 const TopicsBar = () => {
   const [topics, setTopics] = useState([]);
   const topic = useTopic();
+  const currentRoute = useHistory().location.pathname.toLowerCase();
 
   useEffect(() => {
     fetch(
@@ -22,6 +23,12 @@ const TopicsBar = () => {
       );
   }, []);
 
+  const checkRoute = (id) => {
+    // if (!(currentRoute.includes("category")) && currentRoute === "/") return true;
+    if (currentRoute.includes("category") && currentRoute.split("/")[2] === id.toString()) return true;
+    return false;
+  }  
+
   let topicList = [];
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
@@ -31,18 +38,17 @@ const TopicsBar = () => {
       <div className="topics-bar">
         {topicList &&
           topicList.map(({ id, name }, index) => (
-            <Link
+            <NavLink
               key={index}
               to={
                 id !== -1
                   ? `/category/${id}/${name.split(" ")[0].toLowerCase()}`
                   : ""
               }
-              className={id === topic.tab ? "selected" : ""}
-              onClick={() => topic.updateTab(id)}
+              className={checkRoute(id) ? "selected" : ""}
             >
               <span>{name.split(" ")[0]}</span>
-            </Link>
+            </NavLink>
           ))}
       </div>
       <hr />
