@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import "../style/pagination.scss";
 
-const LEFT_PAGE = 'LEFT';
-const RIGHT_PAGE = 'RIGHT';
-const FIRST_PAGE = 'FIRST';
-const LAST_PAGE = 'LAST';
+const LEFT_PAGE = "LEFT";
+const RIGHT_PAGE = "RIGHT";
+const FIRST_PAGE = "FIRST";
+const LAST_PAGE = "LAST";
 
 const range = (from, to, step = 1) => {
   let i = from;
@@ -27,7 +28,7 @@ const Pagination = (props) => {
     }
   }, [pageNumber]);
 
-  const gotoPage = async page => {
+  const gotoPage = async (page) => {
     const { onPageChanged } = props;
     const currentPage = Math.max(0, Math.min(page, totalPages));
     await setCurrentPage(currentPage);
@@ -39,12 +40,12 @@ const Pagination = (props) => {
     gotoPage(page);
   };
 
-  const handleLeft = e => {
+  const handleLeft = (e) => {
     e.preventDefault();
     this.gotoPage(currentPage - 1);
   };
 
-  const handleRight = e => {
+  const handleRight = (e) => {
     e.preventDefault();
     this.gotoPage(currentPage + 1);
   };
@@ -74,7 +75,7 @@ const Pagination = (props) => {
     return range(1, totalPages);
   };
 
-  const { pageLimit, hrClass, containerMargin } = props;
+  const { hrClass, containerMargin } = props;
   const pages = fetchPages();
 
   if (!totalRecords || totalPages === 1) return null;
@@ -83,9 +84,11 @@ const Pagination = (props) => {
       <hr className={hrClass} />
       <div style={{ margin: containerMargin }} className="common-pagination">
         <span className="subtitle">
-          Showing {(currentPage - 1) * pageLimit + 1} -{' '}
-          {currentPage * pageLimit > totalRecords ? totalRecords : currentPage * pageLimit} of
-          total {totalRecords} results
+          Showing {(currentPage - 1) * pageLimit + 1} -{" "}
+          {currentPage * pageLimit > totalRecords
+            ? totalRecords
+            : currentPage * pageLimit}{" "}
+          of total {totalRecords} results
         </span>
         <ul className="page-list">
           {pages.map((page, index) => {
@@ -105,7 +108,11 @@ const Pagination = (props) => {
             }
             if (page === FIRST_PAGE) {
               return (
-                <li key={index} className="page-btn start" onClick={e => handleClick(e, 1)}>
+                <li
+                  key={index}
+                  className="page-btn start"
+                  onClick={(e) => handleClick(e, 1)}
+                >
                   <span>First</span>
                 </li>
               );
@@ -115,7 +122,7 @@ const Pagination = (props) => {
                 <li
                   key={index}
                   className="page-btn end"
-                  onClick={e => handleClick(e, totalPages)}
+                  onClick={(e) => handleClick(e, totalPages)}
                 >
                   <span>Last</span>
                 </li>
@@ -124,8 +131,8 @@ const Pagination = (props) => {
             return (
               <li
                 key={index}
-                className={`page-btn${currentPage === page ? ' selected' : ''}`}
-                onClick={e => handleClick(e, page)}
+                className={`page-btn${currentPage === page ? " selected" : ""}`}
+                onClick={(e) => handleClick(e, page)}
               >
                 <span>{page}</span>
               </li>

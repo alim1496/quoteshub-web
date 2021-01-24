@@ -10,12 +10,14 @@ import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
 import ErrorState from "../components/ErrorState";
 import { TopicContext, useTopic } from "../context/TabContextController";
+import Pagination from "../components/Pagination";
 
 const Home = ({ location, match }) => {
   const partitions = [];
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [count, setCount] = useState(0);
   const topic = useTopic();
   const { pathname } = location;
   const [title, setTitle] = useState("");
@@ -49,8 +51,9 @@ const Home = ({ location, match }) => {
     )
       .then((res) => res.json())
       .then(
-        (result) => {
-          setQuotes(result);
+        ({ quotes, count }) => {
+          setQuotes(quotes);
+          setCount(count);
           setLoading(false);
         },
         (error) => {
@@ -67,8 +70,9 @@ const Home = ({ location, match }) => {
     )
       .then((res) => res.json())
       .then(
-        (result) => {
-          setQuotes(result);
+        ({ quotes, count }) => {
+          setQuotes(quotes);
+          setCount(count);
           setLoading(false);
         },
         (error) => {
@@ -85,8 +89,9 @@ const Home = ({ location, match }) => {
     )
       .then((res) => res.json())
       .then(
-        ({ quotes }) => {
+        ({ quotes, count }) => {
           setQuotes(quotes);
+          setCount(count);
           setLoading(false);
         },
         (error) => {
@@ -133,6 +138,17 @@ const Home = ({ location, match }) => {
           <QuoteList quotes={partition} key={index} />
         ))}
       </div>
+      {count > 30 && (
+        <Pagination
+          totalRecords={count}
+          pageLimit={30}
+          pageNeighbours={2}
+          onPageChanged={() => {}}
+          pageNumber={1}
+          containerMargin="0 40px 0 100px"
+          hrClass="publish-pagination-hr"
+        />
+      )}
     </div>
   );
 };
