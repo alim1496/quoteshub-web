@@ -21,20 +21,26 @@ const Home = ({ location, match }) => {
   const topic = useTopic();
   const { pathname } = location;
   const [title, setTitle] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    checkPath(pathname);
+    changePage(1);
   }, [pathname]);
 
-  const checkPath = async (path) => {
+  const changePage = async (_page) => {
+    await setPage(parseInt(_page, 10));
+    checkPath();
+  };
+
+  const checkPath = async () => {
     await setQuotes([]);
     setLoading(true);
-    if (path.includes("category")) {
+    if (pathname.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
       topic.updateTab(id);
       setTitle(`${name[0].toUpperCase() + name.substring(1)} Quotes`);
-    } else if (path.includes("quotes")) {
+    } else if (pathname.includes("quotes")) {
       const { id, name } = match.params;
       fetchAuthorQuotes(id);
       setTitle(`${name} Quotes`);
@@ -47,7 +53,7 @@ const Home = ({ location, match }) => {
 
   const fetchAuthorQuotes = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=1&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -66,7 +72,7 @@ const Home = ({ location, match }) => {
 
   const fetchCategory = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=1&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -85,7 +91,7 @@ const Home = ({ location, match }) => {
 
   const fetchHome = () => {
     fetch(
-      "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=1&size=30"
+      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -143,9 +149,8 @@ const Home = ({ location, match }) => {
           totalRecords={count}
           pageLimit={30}
           pageNeighbours={2}
-          onPageChanged={() => {}}
-          pageNumber={1}
-          containerMargin="0 40px 0 100px"
+          onPageChanged={(p) => changePage(p)}
+          pageNumber={page}
           hrClass="publish-pagination-hr"
         />
       )}

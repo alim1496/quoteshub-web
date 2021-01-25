@@ -4,21 +4,21 @@
   align-items: center;
   padding: 20px 0;
   .subtitle {
-    color: #666666;
-    font-family: Poppins;
-    font-size: 12px;
+    color: #101439;
+    font-family: "OpenSans", Arial, Helvetica, sans-serif;
+    font-size: 14px;
     line-height: 21px;
   }
 
   .page-btn {
     height: 36px;
     width: 36px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #101439;
     border-radius: 3px;
     text-align: center;
     margin: 0 5px;
     font-size: 14px;
-    font-family: "Poppins";
+    font-family: "OpenSans", Arial, Helvetica, sans-serif;
     line-height: 35px;
     outline: none;
     cursor: pointer;
@@ -38,20 +38,20 @@
     }
 
     &:hover {
-      background-color: #48c9ee;
-      border-color: #48c9ee;
+      background-color: #101439;
+      border-color: #101439;
       span {
         color: #fff;
       }
     }
 
     span {
-      color: #666666;
+      color: #101439;
       transition: all 0.4s ease-in-out;
     }
 
     &.selected {
-      background-color: #48c9ee;
+      background-color: #101439;
       border-color: transparent;
       span {
         color: #fff;
