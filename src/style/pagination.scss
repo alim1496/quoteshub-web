@@ -1,81 +1,61 @@
-.common-pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  .subtitle {
-    color: #101439;
-    font-family: "OpenSans", Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 21px;
-  }
+@mixin common-page-item {
+  display: inline;
+  border: 1px solid #101439;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: "OpenSans", Arial, Helvetica, sans-serif;
+}
 
-  .page-btn {
-    height: 36px;
-    width: 36px;
-    border: 1px solid #101439;
-    border-radius: 3px;
-    text-align: center;
-    margin: 0 5px;
-    font-size: 14px;
-    font-family: "OpenSans", Arial, Helvetica, sans-serif;
-    line-height: 35px;
+@mixin active-item {
+  background-color: #101439;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.pagination-container {
+  display: inline-block;
+  padding-left: 0;
+  margin: 22px 0;
+  border-radius: 4px;
+  a {
     outline: none;
+  }
+}
+
+.page-item {
+  @include common-page-item;
+  margin: 0 10px;
+  &:hover {
     cursor: pointer;
-    transition: all 0.4s ease-in-out;
-    &:last-child {
-      margin-right: 0;
-    }
-
-    &.start {
-      margin-right: 10px;
-      width: 60px;
-    }
-
-    &.end {
-      margin-left: 10px;
-      width: 60px;
-    }
-
-    &:hover {
-      background-color: #101439;
-      border-color: #101439;
-      span {
-        color: #fff;
-      }
-    }
-
-    span {
-      color: #101439;
-      transition: all 0.4s ease-in-out;
-    }
-
-    &.selected {
-      background-color: #101439;
-      border-color: transparent;
-      span {
-        color: #fff;
-      }
-    }
+    @include active-item;
   }
+}
 
-  .page-icon {
-    font-weight: 1000;
-    &:hover {
-      font-weight: 2000;
-      color: green;
-    }
+.prev-page-item {
+  @include common-page-item;
+  margin-right: 10px;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
   }
+}
 
-  .page-list {
-    list-style-type: none;
-    display: flex;
-    margin: 0 !important;
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: 3px;
-    li {
-      margin-top: 0;
-    }
+.next-page-item {
+  @include common-page-item;
+  margin-left: 10px;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
   }
+}
+
+.break-item {
+  @include common-page-item;
+  margin: 0 10px;
+} 
+
+.page-item-active {
+  @include active-item;
 }

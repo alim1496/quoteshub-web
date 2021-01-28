@@ -8,9 +8,10 @@ import React, {
 
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
+import "../style/pagination.scss";
 import ErrorState from "../components/ErrorState";
+import ReactPaginate from 'react-paginate';
 import { TopicContext, useTopic } from "../context/TabContextController";
-import Pagination from "../components/Pagination";
 
 const Home = ({ location, match }) => {
   const partitions = [];
@@ -28,7 +29,8 @@ const Home = ({ location, match }) => {
   }, [pathname]);
 
   const changePage = async (_page) => {
-    await setPage(parseInt(_page, 10));
+    console.log(_page.selected);
+    await setPage(parseInt(_page.selected, 10));
     checkPath();
   };
 
@@ -145,13 +147,17 @@ const Home = ({ location, match }) => {
         ))}
       </div>
       {count > 30 && (
-        <Pagination
-          totalRecords={count}
-          pageLimit={30}
-          pageNeighbours={2}
-          onPageChanged={(p) => changePage(p)}
-          pageNumber={page}
-          hrClass="publish-pagination-hr"
+        <ReactPaginate
+          pageCount={Math.ceil(count/30)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName="pagination-container"
+          pageClassName="page-item"
+          previousClassName="prev-page-item"
+          nextClassName="next-page-item"
+          breakClassName="break-item"
+          activeClassName="page-item-active"
+          onPageChange={(p) => changePage(p)}
         />
       )}
     </div>
