@@ -22,15 +22,14 @@ const Home = ({ location, match }) => {
   const topic = useTopic();
   const { pathname } = location;
   const [title, setTitle] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    changePage(1);
+    changePage({selected: 0});
   }, [pathname]);
 
-  const changePage = async (_page) => {
-    console.log(_page.selected);
-    await setPage(parseInt(_page.selected, 10));
+  const changePage = async ({ selected }) => {
+    await setPage(selected);
     checkPath();
   };
 
@@ -55,7 +54,7 @@ const Home = ({ location, match }) => {
 
   const fetchAuthorQuotes = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page+1}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -74,7 +73,7 @@ const Home = ({ location, match }) => {
 
   const fetchCategory = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page+1}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -93,7 +92,7 @@ const Home = ({ location, match }) => {
 
   const fetchHome = () => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page+1}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -158,6 +157,7 @@ const Home = ({ location, match }) => {
           breakClassName="break-item"
           activeClassName="page-item-active"
           onPageChange={(p) => changePage(p)}
+          forcePage={page}
         />
       )}
     </div>
