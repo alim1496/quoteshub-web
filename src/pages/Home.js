@@ -5,7 +5,8 @@ import React, {
   Fragment,
   useContext,
 } from "react";
-
+import { useHistory } from "react-router-dom";
+import queryString from "query-string";
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
 import "../style/pagination.scss";
@@ -15,6 +16,7 @@ import { TopicContext, useTopic } from "../context/TabContextController";
 
 const Home = ({ location, match }) => {
   const partitions = [];
+  const history = useHistory();
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -25,17 +27,19 @@ const Home = ({ location, match }) => {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    changePage({selected: 0});
+    const { page: _page } = queryString.parse(location.search);
+    changePage({selected: _page || 1});
   }, [pathname]);
 
   const changePage = async ({ selected }) => {
-    await setPage(selected);
+    await setPage(selected+1);
     checkPath();
   };
 
   const checkPath = async () => {
     await setQuotes([]);
     setLoading(true);
+    history.push({ search: `?page=${page}` })
     if (pathname.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
@@ -157,7 +161,7 @@ const Home = ({ location, match }) => {
           breakClassName="break-item"
           activeClassName="page-item-active"
           onPageChange={(p) => changePage(p)}
-          forcePage={page}
+          forcePage={page-1}
         />
       )}
     </div>
