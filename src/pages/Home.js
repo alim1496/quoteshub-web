@@ -6,18 +6,15 @@ import React, {
   useContext,
 } from "react";
 import { useHistory } from "react-router-dom";
-import queryString from "query-string";
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
-import "../style/pagination.scss";
 import ErrorState from "../components/ErrorState";
-import ReactPaginate from 'react-paginate';
 import { TopicContext, useTopic } from "../context/TabContextController";
 
 const Home = ({ location, match }) => {
-  const partitions = [];
-  const history = useHistory();
-  const [quotes, setQuotes] = useState([]);
+  const [quotes1, setQuotes1] = useState([]);
+  const [quotes2, setQuotes2] = useState([]);
+  const [quotes3, setQuotes3] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
@@ -25,21 +22,16 @@ const Home = ({ location, match }) => {
   const { pathname } = location;
   const [title, setTitle] = useState("");
   const [page, setPage] = useState(0);
-
+  
   useEffect(() => {
-    const { page: _page } = queryString.parse(location.search);
-    changePage({selected: _page || 1});
+    checkPath();
   }, [pathname]);
 
-  const changePage = async ({ selected }) => {
-    await setPage(selected+1);
-    checkPath();
-  };
-
   const checkPath = async () => {
-    await setQuotes([]);
+    await setQuotes1([]);
+    await setQuotes2([]);
+    await setQuotes3([]);
     setLoading(true);
-    history.push({ search: `?page=${page}` })
     if (pathname.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
@@ -63,7 +55,7 @@ const Home = ({ location, match }) => {
       .then((res) => res.json())
       .then(
         ({ quotes, count }) => {
-          setQuotes(quotes);
+          processQuotes(quotes);
           setCount(count);
           setLoading(false);
         },
@@ -82,7 +74,7 @@ const Home = ({ location, match }) => {
       .then((res) => res.json())
       .then(
         ({ quotes, count }) => {
-          setQuotes(quotes);
+          processQuotes(quotes);
           setCount(count);
           setLoading(false);
         },
@@ -101,7 +93,7 @@ const Home = ({ location, match }) => {
       .then((res) => res.json())
       .then(
         ({ quotes, count }) => {
-          setQuotes(quotes);
+          processQuotes(quotes);
           setCount(count);
           setLoading(false);
         },
@@ -113,14 +105,22 @@ const Home = ({ location, match }) => {
       );
   };
 
-  if (quotes.length > 0) {
-    const partitionLength = Math.ceil(quotes.length / 3);
+  const processQuotes = (quotes) => {
+    const partitions = [];
+    if (quotes.length > 0) {
+      const partitionLength = Math.ceil(quotes.length / 3);
+  
+      for (let i = 0; i < quotes.length; i += partitionLength) {
+        const partition = quotes.slice(i, i + partitionLength);
+        partitions.push(partition);
+      }
 
-    for (let i = 0; i < quotes.length; i += partitionLength) {
-      const partition = quotes.slice(i, i + partitionLength);
-      partitions.push(partition);
+      setQuotes1(quotes1 => [...quotes1, ...partitions[0]]);
+      setQuotes2(quotes2 => [...quotes2, ...partitions[1]]);
+      setQuotes3(quotes3 => [...quotes3, ...partitions[2]]);
+
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -145,25 +145,10 @@ const Home = ({ location, match }) => {
     <div className="main-container">
       <h2 className="top-title">{title}</h2>
       <div className="container-quotes">
-        {partitions.map((partition, index) => (
-          <QuoteList quotes={partition} key={index} />
-        ))}
+        <QuoteList quotes={quotes1} />
+        <QuoteList quotes={quotes2} />
+        <QuoteList quotes={quotes3} />
       </div>
-      {count > 30 && (
-        <ReactPaginate
-          pageCount={Math.ceil(count/30)}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          containerClassName="pagination-container"
-          pageClassName="page-item"
-          previousClassName="prev-page-item"
-          nextClassName="next-page-item"
-          breakClassName="break-item"
-          activeClassName="page-item-active"
-          onPageChange={(p) => changePage(p)}
-          forcePage={page-1}
-        />
-      )}
     </div>
   );
 };
