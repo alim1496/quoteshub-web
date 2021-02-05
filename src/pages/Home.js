@@ -21,10 +21,16 @@ const Home = ({ location, match }) => {
   const topic = useTopic();
   const { pathname } = location;
   const [title, setTitle] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [noMore, setNoMore] = useState(false);
+  const [blocked, setBlocked] = useState(false);
   
   useEffect(() => {
     checkPath();
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
   }, [pathname]);
 
   const checkPath = async () => {
@@ -32,6 +38,7 @@ const Home = ({ location, match }) => {
     await setQuotes2([]);
     await setQuotes3([]);
     setLoading(true);
+    setPage(1);
     if (pathname.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
@@ -48,9 +55,48 @@ const Home = ({ location, match }) => {
     }
   };
 
+  const handleScroll = async () => {
+    const ul = document.getElementsByClassName("quote-list")[0];
+    if (ul) {
+      const lastchild = ul.lastChild;
+      const lastChildOffset = lastchild.offsetTop + lastchild.clientHeight;
+      const pageOffset = window.pageYOffset + window.innerHeight;
+      if (!blocked && !noMore && pageOffset >= lastChildOffset) {
+        if (pathname.includes("category")) {
+          const { id, name } = match.params;
+          await setPage(page + 1);
+          fetchCategory(id);
+        } else if (pathname.includes("quotes")) {
+          const { id, name } = match.params;
+          await setPage(page + 1);
+          fetchAuthorQuotes(id);
+        } else {
+          await setPage(page + 1);
+          fetchHome();
+        }
+      //   if (pathname.includes('category')) {
+      //     const { match: { params } } = this.props;
+      //     const { catID, category } = params;
+      //     if (catID) {
+      //       this.setState(prevState => ({
+      //         page: prevState.page + 1,
+      //       }), () => this.fetchCategoryMore(catID));
+      //     } else {
+      //       this.fetchMoreOtherNews(category);
+      //     }
+      //   } else {
+      //     this.setState(prevState => ({
+      //       page: prevState.page + 1,
+      //     }), () => this.fetchMoreFeed());
+      //   }
+      }
+    }
+  };
+
   const fetchAuthorQuotes = (id) => {
+    setBlocked(true);
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page+1}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -58,18 +104,21 @@ const Home = ({ location, match }) => {
           processQuotes(quotes);
           setCount(count);
           setLoading(false);
+          setBlocked(false);
         },
         (error) => {
           console.log(error);
           setLoading(false);
           setError(true);
+          setBlocked(false);
         }
       );
   };
 
   const fetchCategory = (id) => {
+    setBlocked(true);
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page+1}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -77,18 +126,21 @@ const Home = ({ location, match }) => {
           processQuotes(quotes);
           setCount(count);
           setLoading(false);
+          setBlocked(false);
         },
         (error) => {
           console.log(error);
           setLoading(false);
           setError(true);
+          setBlocked(false);
         }
       );
   };
 
   const fetchHome = () => {
+    setBlocked(true);
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page+1}&size=30`
+      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -96,11 +148,13 @@ const Home = ({ location, match }) => {
           processQuotes(quotes);
           setCount(count);
           setLoading(false);
+          setBlocked(false);
         },
         (error) => {
           console.log(error);
           setLoading(false);
           setError(true);
+          setBlocked(false);
         }
       );
   };
