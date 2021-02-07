@@ -21,16 +21,16 @@ const Home = ({ location, match }) => {
   const topic = useTopic();
   const { pathname } = location;
   const [title, setTitle] = useState("");
-  const [page, setPage] = useState(1);
   const [noMore, setNoMore] = useState(false);
   const [blocked, setBlocked] = useState(false);
-  
+  let page = 1;
+
   useEffect(() => {
     checkPath();
     window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [pathname]);
 
   const checkPath = async () => {
@@ -38,7 +38,8 @@ const Home = ({ location, match }) => {
     await setQuotes2([]);
     await setQuotes3([]);
     setLoading(true);
-    setPage(1);
+    setNoMore(false);
+    page = 1;
     if (pathname.includes("category")) {
       const { id, name } = match.params;
       fetchCategory(id);
@@ -55,40 +56,25 @@ const Home = ({ location, match }) => {
     }
   };
 
-  const handleScroll = async () => {
+  const handleScroll = () => {
     const ul = document.getElementsByClassName("quote-list")[0];
-    if (ul) {
+    if (!blocked && !noMore && ul) {
       const lastchild = ul.lastChild;
       const lastChildOffset = lastchild.offsetTop + lastchild.clientHeight;
       const pageOffset = window.pageYOffset + window.innerHeight;
       if (!blocked && !noMore && pageOffset >= lastChildOffset) {
         if (pathname.includes("category")) {
           const { id, name } = match.params;
-          await setPage(page + 1);
+          page = page + 1;
           fetchCategory(id);
         } else if (pathname.includes("quotes")) {
           const { id, name } = match.params;
-          await setPage(page + 1);
+          page = page + 1;
           fetchAuthorQuotes(id);
         } else {
-          await setPage(page + 1);
+          page = page + 1;
           fetchHome();
         }
-      //   if (pathname.includes('category')) {
-      //     const { match: { params } } = this.props;
-      //     const { catID, category } = params;
-      //     if (catID) {
-      //       this.setState(prevState => ({
-      //         page: prevState.page + 1,
-      //       }), () => this.fetchCategoryMore(catID));
-      //     } else {
-      //       this.fetchMoreOtherNews(category);
-      //     }
-      //   } else {
-      //     this.setState(prevState => ({
-      //       page: prevState.page + 1,
-      //     }), () => this.fetchMoreFeed());
-      //   }
       }
     }
   };
@@ -105,6 +91,7 @@ const Home = ({ location, match }) => {
           setCount(count);
           setLoading(false);
           setBlocked(false);
+          setNoMore(quotes.length === 0);
         },
         (error) => {
           console.log(error);
@@ -127,6 +114,8 @@ const Home = ({ location, match }) => {
           setCount(count);
           setLoading(false);
           setBlocked(false);
+          console.log(quotes.length);
+          setNoMore(quotes.length === 0);
         },
         (error) => {
           console.log(error);
@@ -138,6 +127,7 @@ const Home = ({ location, match }) => {
   };
 
   const fetchHome = () => {
+    console.log(page);
     setBlocked(true);
     fetch(
       `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
@@ -149,6 +139,7 @@ const Home = ({ location, match }) => {
           setCount(count);
           setLoading(false);
           setBlocked(false);
+          setNoMore(quotes.length === 0);
         },
         (error) => {
           console.log(error);
@@ -163,16 +154,15 @@ const Home = ({ location, match }) => {
     const partitions = [];
     if (quotes.length > 0) {
       const partitionLength = Math.ceil(quotes.length / 3);
-  
+
       for (let i = 0; i < quotes.length; i += partitionLength) {
         const partition = quotes.slice(i, i + partitionLength);
         partitions.push(partition);
       }
 
-      setQuotes1(quotes1 => [...quotes1, ...partitions[0]]);
-      setQuotes2(quotes2 => [...quotes2, ...partitions[1]]);
-      setQuotes3(quotes3 => [...quotes3, ...partitions[2]]);
-
+      setQuotes1((quotes1) => [...quotes1, ...partitions[0]]);
+      setQuotes2((quotes2) => [...quotes2, ...partitions[1]]);
+      setQuotes3((quotes3) => [...quotes3, ...partitions[2]]);
     }
   };
 
