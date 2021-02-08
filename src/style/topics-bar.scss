@@ -2,22 +2,16 @@ $color-background: #ffffff;
 $color-loader: #101439;
 $common-bg: #10182f;
 
-.main-navbar {
-  hr {
-    width: 80%;
-  }
-}
-
 .topics-bar {
   font-family: "Merriweather Bold", Arial, Helvetica, sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 80%;
-  margin: auto;
   a {
     text-decoration: none;
     color: $common-bg;
+    font-size: 15px;
+    margin: 0 5px;
   }
   .selected {
     color: blue;

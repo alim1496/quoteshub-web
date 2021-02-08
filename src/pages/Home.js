@@ -58,7 +58,7 @@ const Home = ({ location, match }) => {
   };
 
   const handleScroll = () => {
-    const ul = document.getElementsByClassName("quote-list")[0];
+    const ul = document.getElementsByClassName("quote-list")[2];
     if (!blocked && !noMore && ul) {
       const lastchild = ul.lastChild;
       const lastChildOffset = lastchild.offsetTop + lastchild.clientHeight;
@@ -187,8 +187,8 @@ const Home = ({ location, match }) => {
   }
 
   return (
-    <div className="main-container">
-      <h2 className="top-title">{title}</h2>
+    <div className="container grid-md">
+      <h5 className="top-title">{title}</h5>
       <div className="container-quotes">
         <QuoteList quotes={quotes1} />
         <QuoteList quotes={quotes2} />

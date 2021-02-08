@@ -17,15 +17,15 @@ $common-bg: #10182f;
   src: url("../assets/fonts/Merriweather-Bold.ttf");
 }
 
-.container {
-  margin: 20px auto;
-  max-width: 1400px;
-}
+// .container {
+//   margin: 20px auto;
+//   max-width: 1400px;
+// }
 
-.main-container {
-  margin: 20px auto;
-  width: 80%;
-}
+// .main-container {
+//   margin: 20px auto;
+//   width: 80%;
+// }
 
 .container-quotes {
   display: flex;
@@ -112,14 +112,32 @@ $common-bg: #10182f;
   }
   p {
     font-family: "Merriweather", Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     margin: 0 0 10px 0;
     color: #101439;
+    font-weight: 500;
   }
   a {
     font-family: "OpenSans", Arial, Helvetica, sans-serif;
     font-size: 14px;
     text-decoration: none;
-    color: #101439;
+    font-weight: 500;
+  }
+}
+
+.desktop-only {
+  display: unset;
+}
+
+@media (max-width: 600px) {
+  .desktop-only {
+    display: none;
+  }
+  .quote-body {
+    width: 300px;
+  }
+  .container-quotes {
+    flex-direction: column;
+    align-items: center;
   }
 }

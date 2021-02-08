@@ -25,17 +25,21 @@ const TopicsBar = () => {
 
   const checkRoute = (id) => {
     // if (!(currentRoute.includes("category")) && currentRoute === "/") return true;
-    if (currentRoute.includes("category") && currentRoute.split("/")[2] === id.toString()) return true;
+    if (
+      currentRoute.includes("category") &&
+      currentRoute.split("/")[2] === id.toString()
+    )
+      return true;
     return false;
-  }  
+  };
 
   let topicList = [];
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
   return (
-    <div className="main-navbar">
+    <div className="desktop-only">
       <hr />
-      <div className="topics-bar">
+      <div className="container grid-md topics-bar">
         {topicList &&
           topicList.map(({ id, name }, index) => (
             <NavLink
