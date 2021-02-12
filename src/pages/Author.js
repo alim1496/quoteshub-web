@@ -52,12 +52,14 @@ const Author = ({ match }) => {
   }
 
   return (
-    <div className="author-container">
+    <div className="author-container container grid-xl">
       <div className="author-details">
-        <img src={source.cover} alt="cover" />
-        <div className="author-desc">
-          <span>{name}</span>
-          <p>{source.shortDesc}</p>
+        <div className="columns">
+          <img src={source.cover} alt="cover" className="column col-sm-12 col-md-4 col-4" />
+          <div className="author-desc column col-sm-12 col-md-8 col-8">
+            <span>{name}</span>
+            <p>{source.shortDesc}</p>
+          </div>
         </div>
       </div>
       <div className="carousel-holder">

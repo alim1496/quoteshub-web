@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { TopicContext, useTopic } from "../context/TabContextController";
+import logo from "../assets/images/logo.png";
 import "../style/topics-bar.scss";
 
 const TopicsBar = () => {
@@ -37,9 +38,9 @@ const TopicsBar = () => {
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
   return (
-    <div className="desktop-only">
-      <hr />
-      <div className="container grid-md topics-bar">
+    <div className="desktop-only main-navbar">
+      <div className="container grid-xl topics-bar">
+        <NavLink to="/"><img src={logo} alt="logo" /></NavLink>
         {topicList &&
           topicList.map(({ id, name }, index) => (
             <NavLink
@@ -55,7 +56,6 @@ const TopicsBar = () => {
             </NavLink>
           ))}
       </div>
-      <hr />
     </div>
   );
 };
