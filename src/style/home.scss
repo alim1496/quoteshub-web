@@ -141,4 +141,25 @@ $common-bg: #10182f;
     flex-direction: column;
     align-items: center;
   }
+  .topics-bar {
+    display: none;
+  }
+  .topics-bar-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      margin-right: 20px;
+    }
+  }
+  .mobile-menu-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    background: #fff;
+    width: 100vw;
+    height: 100vh;
+  }
 }

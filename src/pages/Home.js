@@ -116,7 +116,6 @@ const Home = ({ location, match }) => {
           setCount(count);
           setLoading(false);
           blocked = false;
-          console.log(quotes.length);
           noMore = quotes.length === 0;
         },
         (error) => {
