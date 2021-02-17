@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { TopicContext, useTopic } from "../context/TabContextController";
 import logo from "../assets/images/logo.png";
-import menu from "../assets/images/menu-icon.png"
+import menu from "../assets/images/menu-icon.png";
+import arrow from "../assets/images/left-arrow.png";
 import "../style/topics-bar.scss";
 
 const TopicsBar = () => {
@@ -35,6 +36,14 @@ const TopicsBar = () => {
     return false;
   };
 
+  const updateMenu = flag => {
+    if (flag === 1) {
+      document.querySelector(".mobile-menu-modal").classList.add("translate-left");
+    } else {
+      document.querySelector(".mobile-menu-modal").classList.remove("translate-left");
+    }
+  };
+
   let topicList = [];
   if (topics.length > 0)
     topicList = [{ id: -1, name: "Featured Quote" }, ...topics];
@@ -42,9 +51,10 @@ const TopicsBar = () => {
     <div className="main-navbar">
       <div className="topics-bar-mobile">
         <NavLink to="/"><img src={logo} alt="logo" /></NavLink>
-        <img src={menu} alt="menu" />
+        <img src={menu} alt="menu" onClick={() => updateMenu(1)} />
       </div>
       <div className="mobile-menu-modal">
+        <img src={arrow} alt="arrow" onClick={() => updateMenu(2)} />
         {topicList &&
           topicList.map(({ id, name }, index) => (
             <NavLink
@@ -55,6 +65,7 @@ const TopicsBar = () => {
                   : ""
               }
               className={checkRoute(id) ? "selected" : ""}
+              onClick={() => updateMenu(2)}
             >
               <span>{name.split(" ")[0]}</span>
             </NavLink>
