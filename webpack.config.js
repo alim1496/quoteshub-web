@@ -1,12 +1,13 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
   mode: "development",
   output: {
-    path: path.resolve(__dirname, "/dist"),
-    filename: "js/[name].[hash].bundle.js",
+    path: path.join(__dirname, "./dist"),
+    filename: "js/[name].[contenthash].bundle.js",
     publicPath: "/",
   },
   module: {
@@ -44,7 +45,7 @@ module.exports = {
   },
   devServer: {
     compress: true,
-    contentBase: "./",
+    contentBase: "./dist",
     port: 8000,
     filename: "bundle.js",
     disableHostCheck: true,
@@ -56,5 +57,9 @@ module.exports = {
     index: "index.html",
     historyApiFallback: true,
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+  devtool: 'inline-source-map',
+  plugins: [
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    new CleanWebpackPlugin(),
+  ],
 };
