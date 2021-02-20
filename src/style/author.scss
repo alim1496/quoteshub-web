@@ -29,6 +29,9 @@ $common-bg: #10182f;
 .author-quote-list {
   display: flex;
   flex-flow: wrap row;
+  div {
+    margin-right: 10px;
+  }
 }
 
 .carousal-item {

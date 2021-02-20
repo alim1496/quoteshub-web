@@ -58,7 +58,7 @@ const Home = ({ location, match }) => {
   };
 
   const handleScroll = () => {
-    const ul = document.getElementsByClassName("quote-list")[2];
+    const ul = document.getElementsByClassName("quote-list")[0];
     if (!blocked && !noMore && ul) {
       const lastchild = ul.lastChild;
       const lastChildOffset = lastchild.offsetTop + lastchild.clientHeight;
@@ -151,18 +151,8 @@ const Home = ({ location, match }) => {
   };
 
   const processQuotes = (quotes) => {
-    const partitions = [];
     if (quotes.length > 0) {
-      const partitionLength = Math.ceil(quotes.length / 3);
-
-      for (let i = 0; i < quotes.length; i += partitionLength) {
-        const partition = quotes.slice(i, i + partitionLength);
-        partitions.push(partition);
-      }
-
-      setQuotes1((quotes1) => [...quotes1, ...partitions[0]]);
-      setQuotes2((quotes2) => [...quotes2, ...partitions[1]]);
-      setQuotes3((quotes3) => [...quotes3, ...partitions[2]]);
+      setQuotes1((quotes1) => [...quotes1, ...quotes]);
     }
   };
 
@@ -186,13 +176,9 @@ const Home = ({ location, match }) => {
   }
 
   return (
-    <div className="container grid-md">
+    <div className="container grid-lg">
       <h5 className="top-title">{title}</h5>
-      <div className="container-quotes">
-        <QuoteList quotes={quotes1} />
-        <QuoteList quotes={quotes2} />
-        <QuoteList quotes={quotes3} />
-      </div>
+      <QuoteList quotes={quotes1} />
     </div>
   );
 };

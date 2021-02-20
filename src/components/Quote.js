@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Quote = ({ quote, rightMargin }) => (
-  <div className="quote-body" style={{ marginRight: `${rightMargin}px` }}>
+const Quote = ({ quote }) => (
+  <div className="quote-body column col-4 col-lg-6 col-sm-12">
     <span className="single-quote">“</span>
     <p>{quote.title}</p>
     {quote.source && (

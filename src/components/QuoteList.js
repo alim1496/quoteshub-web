@@ -2,10 +2,10 @@ import React from "react";
 import Quote from "./Quote";
 
 const QuoteList = ({ quotes }) => (
-  <div className="quote-list">
+  <div className="columns quote-list">
     {quotes &&
       quotes.map((quote) => (
-        <Quote quote={quote} key={quote.id} rightMargin={0} />
+        <Quote quote={quote} key={quote.id} />
       ))}
   </div>
 );
