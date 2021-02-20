@@ -86,7 +86,7 @@ const Home = ({ location, match }) => {
 
   const fetchAuthorQuotes = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page}&size=30`
+      `https://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/quotes/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -108,7 +108,7 @@ const Home = ({ location, match }) => {
 
   const fetchCategory = (id) => {
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page}&size=30`
+      `https://quotes-ocean.herokuapp.com/api/quotes/v2/category/${id}/?page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(
@@ -131,7 +131,7 @@ const Home = ({ location, match }) => {
   const fetchHome = () => {
     console.log(page);
     fetch(
-      `http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
+      `https://quotes-ocean.herokuapp.com/api/quotes/v3/home/?featured=true&page=${page}&size=30`
     )
       .then((res) => res.json())
       .then(

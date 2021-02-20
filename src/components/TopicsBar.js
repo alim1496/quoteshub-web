@@ -13,7 +13,7 @@ const TopicsBar = () => {
 
   useEffect(() => {
     fetch(
-      "http://quotes-ocean.herokuapp.com/api/quotes/v3/home/?with_topics=true&size=0"
+      "https://quotes-ocean.herokuapp.com/api/quotes/v3/home/?with_topics=true&size=0"
     )
       .then((res) => res.json())
       .then(

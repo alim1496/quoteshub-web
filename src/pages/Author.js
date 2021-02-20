@@ -17,7 +17,7 @@ const Author = ({ match }) => {
 
   const fetchData = () => {
     setLoading(true);
-    fetch(`http://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/`)
+    fetch(`https://quotes-ocean.herokuapp.com/api/quotes/v2/source/${id}/`)
       .then((res) => res.json())
       .then(
         ({ source, quotes }) => {
