@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import "../style/author.scss";
 import Quote from "../components/Quote";
@@ -53,6 +54,9 @@ const Author = ({ match }) => {
 
   return (
     <div className="author-container container grid-xl">
+      <Helmet>
+        <title>{name} | Quotes Hub</title>
+      </Helmet>
       <div className="author-details">
         <div className="columns">
           <img src={source.cover} alt="cover" className="column col-sm-12 col-md-4 col-4" />

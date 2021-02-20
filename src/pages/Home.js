@@ -5,6 +5,7 @@ import React, {
   Fragment,
   useContext,
 } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
 import QuoteList from "../components/QuoteList";
 import "../style/home.scss";
@@ -177,6 +178,9 @@ const Home = ({ location, match }) => {
 
   return (
     <div className="container grid-lg">
+      <Helmet>
+        <title>{title} | Quotes Hub</title>
+      </Helmet>
       <h5 className="top-title">{title}</h5>
       <QuoteList quotes={quotes1} />
     </div>
