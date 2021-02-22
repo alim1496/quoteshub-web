@@ -57,9 +57,12 @@ module.exports = {
     index: "index.html",
     historyApiFallback: true,
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   plugins: [
-    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      favicon: "./src/favicon.ico",
+    }),
     new CleanWebpackPlugin(),
   ],
 };
