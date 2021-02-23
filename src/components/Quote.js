@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SocialShare from "./SocialShare";
 
 const Quote = ({ quote }) => (
   <div className="quote-body column col-4 col-lg-6 col-sm-12">
@@ -10,6 +11,7 @@ const Quote = ({ quote }) => (
         {quote.source.name}
       </Link>
     )}
+    <SocialShare shareUrl={`/quote/${quote.id}/`} />
   </div>
 );
 

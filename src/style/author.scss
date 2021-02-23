@@ -2,6 +2,43 @@ $color-background: #ffffff;
 $color-loader: #101439;
 $common-bg: #10182f;
 
+.boundary-quote {
+  height: 80vh;
+}
+
+.social-share-container {
+  margin-top: 10px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.single-quote-holder {
+  font-family: "Merriweather", Arial, Helvetica, sans-serif;
+  margin-top: 80px;
+  background-color: #f2f5fe;
+  border: 1px solid #f2f5fe;
+  border-radius: 10px;
+  padding: 20px;
+  .author-part {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    span {
+      display: block;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+
 .author-container {
   width: 80%;
   margin: 70px auto;

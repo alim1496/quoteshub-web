@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import TabContext from "./context/TabContext";
 import { TopicContextProvider } from "./context/TabContextController";
 import Author from "./pages/Author";
+import SingleQuote from "./pages/SingleQuote";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/category/:id/:name" exact component={Home} />
             <Route path="/author/:id/:name" exact component={Author} />
             <Route path="/quotes/:id/:name" exact component={Home} />
+            <Route path="/quote/:id/" exact component={SingleQuote} />
           </Switch>
           <Footer />
         </BrowserRouter>
