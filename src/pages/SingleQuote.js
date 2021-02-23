@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import constants from "../utils/constants";
 
-const { mainUrl } = constants;
+const { mainUrlApi } = constants;
 
 const SingleQuote = ({ match }) => {
   const [title, setTitle] = useState("");
@@ -13,7 +13,7 @@ const SingleQuote = ({ match }) => {
 
   useEffect(() => {
     const { id } = match.params;
-    fetch(`${mainUrl}quotes/v2/quote/${id}/`)
+    fetch(`${mainUrlApi}quotes/v2/quote/${id}/`)
       .then((res) => res.json())
       .then(
         ({ title, author, author_id, author_img }) => {
@@ -35,6 +35,10 @@ const SingleQuote = ({ match }) => {
           <title>
             {title} | {author}
           </title>
+          <meta
+            property="og:url"
+            content={`https://quotes-hub.netlify.app/quote/${match.params.id}/`}
+          />
         </Helmet>
         <div className="author-part">
           <img src={image} alt="author" />
